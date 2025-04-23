@@ -22,8 +22,9 @@ class EmployeeDatabaseTest {
         Employee<UUID> employee = new Employee<>("Alice", "HR", 3500.0, 4.2, 5);
         EmployeeDatabase<UUID> dataBase = new EmployeeDatabase<>();
         UUID employeeID = employee.getEmployeeID();
+        dataBase.addEmployee(employee);
         dataBase.removeEmployee(employeeID);
-
+        Assertions.assertTrue(dataBase.getAllEmployees().isEmpty());
     }
 
     @Test
