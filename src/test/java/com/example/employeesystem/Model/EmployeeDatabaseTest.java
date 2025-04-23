@@ -1,5 +1,6 @@
 package com.example.employeesystem.Model;
 
+import com.example.employeesystem.Exception.EmployeeNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -59,6 +60,8 @@ class EmployeeDatabaseTest {
         dataBase.addEmployee(emp4);
         dataBase.addEmployee(emp5);
 
-        Assertions.assertTrue(dataBase.search("Devops").isEmpty());
+        Assertions.assertThrows(EmployeeNotFoundException.class, () -> {
+            dataBase.search("devops");
+        });
     }
 }
