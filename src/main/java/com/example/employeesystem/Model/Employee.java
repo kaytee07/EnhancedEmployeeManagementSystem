@@ -56,9 +56,9 @@ public class Employee <T> implements Comparable<Employee<T>>{
         }
     }
 
-    private void validateDepartment(String department) throws InvalidDepartmentException {
+    private void validateDepartment(String department){
         if (department == null || department.trim().isEmpty()) {
-            throw new InvalidDepartmentException("Department cannot be empty or null.");
+            throw new IllegalArgumentException("Department cannot be empty or null.");
         }
     }
 
