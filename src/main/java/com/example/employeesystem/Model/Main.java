@@ -34,43 +34,43 @@ public class Main {
                         ", Staff ID: " + emp.getEmployeeID());
             });
 
-            // Remove Bob
-            db.removeEmployee(employeeID2);
-            System.out.println("\n❌ After Removing Bob:");
-            db.getAllEmployees().forEach(emp -> {
-                System.out.println("Name: " + emp.getName() +
-                        ", Department: " + emp.getDepartment() +
-                        ", Salary: " + emp.getSalary() +
-                        ", Experience: " + emp.getYearsOfExperience() +
-                        ", Staff ID: " + emp.getEmployeeID());
-            });
-
-            db.updateEmployeeDetail(employeeID5, "department", "Finance");
-
-// Update Diana's salary
-            db.updateEmployeeDetail(employeeID4, "salary", 90000.0);
-
-            System.out.println("\n🛠️ After Updating Employee Details:");
-            db.getAllEmployees().forEach(emp -> {
-                System.out.println("Name: " + emp.getName() +
-                        ", Department: " + emp.getDepartment() +
-                        ", Salary: " + emp.getSalary() +
-                        ", Experience: " + emp.getYearsOfExperience() +
-                        ", Staff ID: " + emp.getEmployeeID());
-            });
-
-
-            // Top 3 highest paid
-            System.out.println("\n🏆 Top 3 Highest Paid Employees:");
-            db.getTopNHighestPaid(3).forEach(emp -> {
-                System.out.println("Name: " + emp.getName() +
-                        ", Salary: " + emp.getSalary());
-            });
-
-            db.displayEmployeesWithForLoop();
-            db.printDepartmentReport();
-            
-            
+//            // Remove Bob
+//            db.removeEmployee(employeeID2);
+//            System.out.println("\n❌ After Removing Bob:");
+//            db.getAllEmployees().forEach(emp -> {
+//                System.out.println("Name: " + emp.getName() +
+//                        ", Department: " + emp.getDepartment() +
+//                        ", Salary: " + emp.getSalary() +
+//                        ", Experience: " + emp.getYearsOfExperience() +
+//                        ", Staff ID: " + emp.getEmployeeID());
+//            });
+//
+//            db.updateEmployeeDetail(employeeID5, "department", "Finance");
+//
+//// Update Diana's salary
+//            db.updateEmployeeDetail(employeeID4, "salary", 90000.0);
+//
+//            System.out.println("\n🛠️ After Updating Employee Details:");
+//            db.getAllEmployees().forEach(emp -> {
+//                System.out.println("Name: " + emp.getName() +
+//                        ", Department: " + emp.getDepartment() +
+//                        ", Salary: " + emp.getSalary() +
+//                        ", Experience: " + emp.getYearsOfExperience() +
+//                        ", Staff ID: " + emp.getEmployeeID());
+//            });
+//
+//
+//            // Top 3 highest paid
+//            System.out.println("\n🏆 Top 3 Highest Paid Employees:");
+//            db.getTopNHighestPaid(3).forEach(emp -> {
+//                System.out.println("Name: " + emp.getName() +
+//                        ", Salary: " + emp.getSalary());
+//            });
+//
+//            db.displayEmployeesWithForLoop();
+//            db.printDepartmentReport();
+//
+//
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

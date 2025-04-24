@@ -86,28 +86,29 @@ public class Employee <T> implements Comparable<Employee<T>>{
         }
     }
 
-    public void setName(String name) throws Exception {
+    public void setName(String name) throws InvalidNameException {
         validateName(name);
         this.name = name;
     }
 
     public String getName () { return name; }
 
-    public void setDepartment (String department) throws Exception {
+    public void setDepartment (String department) throws InvalidDepartmentException {
         validateDepartment(department);
         this.department = department;
     }
 
     public String getDepartment(){ return department;}
 
-    public void setSalary(double salary) throws Exception {
+    public void setSalary(double salary) throws InvalidSalaryException {
         validateSalary(salary);
         this.salary = salary;
     }
 
     public Double getSalary(){ return salary; }
 
-    public void setPerformanceRating(double performanceRating){
+    public void setPerformanceRating(double performanceRating) throws InvalidPerformanceRatingException{
+        validatePerformanceRating(performanceRating);
         this.performanceRating = performanceRating;
     }
 
@@ -115,7 +116,8 @@ public class Employee <T> implements Comparable<Employee<T>>{
         return performanceRating;
     }
 
-    public void setYearsOfExperience(int yearsOfExperience){
+    public void setYearsOfExperience(int yearsOfExperience)throws InvalidExperienceException{
+        validateYearsOfExperience(yearsOfExperience);
         this.yearsOfExperience = yearsOfExperience;
     }
 

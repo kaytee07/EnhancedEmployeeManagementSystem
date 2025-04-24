@@ -6,9 +6,12 @@ import com.example.employeesystem.Exception.InvalidSalaryException;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 
 public class EmployeeDatabase <T> {
-    
+    private static final Logger LOGGER = Logger.getLogger(EmployeeDatabase.class.getName());
     private final HashMap<T, Employee<T>> employees = new HashMap<>();
 
     public T addEmployee(Employee<T> employee){
@@ -160,12 +163,13 @@ public class EmployeeDatabase <T> {
         employees.values().forEach(employee -> {
             if (employee.getPerformanceRating() >= 4.5) {
                 try {
-                    double newSalary = employee.getSalary() + employee.getSalary() * percentageInDecimal;
+                    double raiseToBeAdded = employee.getSalary() * percentageInDecimal;
+                    double newSalary = employee.getSalary() + raiseToBeAdded;
                     employee.setSalary(newSalary);
                 } catch(InvalidSalaryException e){
-                    System.out.println(e.getMessage());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    LOGGER.severe(e.getMessage());
+                } finally {
+                    LOGGER.info("salary should be greater than zero");
                 }
 
             }

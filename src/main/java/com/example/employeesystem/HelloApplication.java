@@ -1,6 +1,6 @@
 package com.example.employeesystem;
 
-import com.example.employeesystem.Exception.EmployeeNotFoundException;
+import com.example.employeesystem.Exception.*;
 import com.example.employeesystem.Model.Employee;
 import com.example.employeesystem.Model.EmployeeDatabase;
 import javafx.application.Application;
@@ -17,9 +17,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 
 public class HelloApplication extends Application {
-
+    private static final Logger LOGGER = Logger.getLogger(EmployeeDatabase.class.getName());
     // Our database instance
     private EmployeeDatabase<UUID> employeeDatabase = new EmployeeDatabase<>();
     private ObservableList<Employee<UUID>> employeeList = FXCollections.observableArrayList();
@@ -187,11 +190,19 @@ public class HelloApplication extends Application {
         Button addButton = new Button("Add Employee");
         addButton.setOnAction(e -> {
             try {
+                if (allFieldsAreBlank(nameField.getText(),
+                        deptField.getText(),
+                        salaryField.getText(),
+                        performanceField.getText(),
+                        yearsOfExperienceField.getText())) {
+                    throw new IllegalArgumentException("Fields cannot be empty");
+                }
                 String name = nameField.getText();
                 String department = deptField.getText();
                 double salary = Double.parseDouble(salaryField.getText());
                 double performance = Double.parseDouble(performanceField.getText());
                 int experience = Integer.parseInt(yearsOfExperienceField.getText());
+
 
                 employeeDatabase.addEmployee(new Employee<UUID>(name, department, salary, performance, experience));
 
@@ -205,6 +216,11 @@ public class HelloApplication extends Application {
                 yearsOfExperienceField.clear();
             } catch (NumberFormatException ex) {
                 showAlert("Error", "Please enter a valid value");
+            } catch (EmployeeNotFoundException | InvalidNameException |
+                    InvalidDepartmentException | InvalidSalaryException |
+                    InvalidPerformanceRatingException | InvalidExperienceException | IllegalArgumentException ex){
+                LOGGER.severe(ex.getMessage());
+                showAlert("Error", ex.getMessage());
             } catch (Exception ex) {
                 showAlert("Error", ex.getMessage());
             } finally {
@@ -286,7 +302,10 @@ public class HelloApplication extends Application {
             refreshEmployeeList();
             clearFields(employeeIDField, nameField, departmentField, salaryField, perfRatingField, yearField);
 
-        } catch (EmployeeNotFoundException ex) {
+        } catch (EmployeeNotFoundException | InvalidNameException |
+                 InvalidDepartmentException | InvalidSalaryException |
+                 InvalidPerformanceRatingException | InvalidExperienceException ex) {
+            LOGGER.severe(ex.getMessage());
             showAlert("Error", ex.getMessage());
         } catch (Exception ex) {
             showAlert("Error", "Invalid input: " + ex.getMessage());

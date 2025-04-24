@@ -8,6 +8,7 @@ module com.example.employeesystem {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires eu.hansolo.tilesfx;
+    requires java.logging;
 
     opens com.example.employeesystem to javafx.fxml;
     exports com.example.employeesystem;
