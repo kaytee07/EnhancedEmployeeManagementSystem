@@ -15,7 +15,15 @@ class EmployeeDatabaseTest {
         Employee<UUID> employee = new Employee<>("Alice", "HR", 3500.0, 4.2, 5);
         EmployeeDatabase<UUID> dataBase = new EmployeeDatabase<>();
         dataBase.addEmployee(employee);
-        Assertions.assertFalse(dataBase.getAllEmployees().isEmpty());
+        Assertions.assertNotNull(dataBase.getEmployee(employee.getEmployeeID()));
+    }
+
+    @Test
+    void VerifyEmployeeSalary() throws Exception {
+        Employee<UUID> employee = new Employee<>("Alice", "HR", 3500.0, 4.2, 5);
+        EmployeeDatabase<UUID> dataBase = new EmployeeDatabase<>();
+        dataBase.addEmployee(employee);
+        Assertions.assertEquals(employee.getSalary(), 3500);
     }
 
     @Test
