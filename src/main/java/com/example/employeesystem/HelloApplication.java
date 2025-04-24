@@ -164,6 +164,15 @@ public class HelloApplication extends Application {
         return searchField;
     }
 
+    public static void validateDepartment(String department) throws InvalidDepartmentException {
+        final List<String> VALID_DEPARTMENTS = List.of("HR", "Engineering", "Sales", "Marketing");
+        if (!VALID_DEPARTMENTS.contains(department)) {
+            throw new InvalidDepartmentException("Invalid department: " + department);
+        }
+        System.out.println("Department " + department + " is valid.");
+    }
+
+
     private GridPane createAddForm() {
         GridPane form = new GridPane();
         form.setHgap(10);
@@ -197,6 +206,7 @@ public class HelloApplication extends Application {
                         yearsOfExperienceField.getText())) {
                     throw new IllegalArgumentException("Fields cannot be empty");
                 }
+                validateDepartment(deptField.getText());
                 String name = nameField.getText();
                 String department = deptField.getText();
                 double salary = Double.parseDouble(salaryField.getText());
@@ -294,6 +304,8 @@ public class HelloApplication extends Application {
             if (allFieldsAreBlank(name, department, salaryText, perfText, yearText)) {
                 throw new IllegalArgumentException("At least one field must be filled to update employee details.");
             }
+
+            validateDepartment(department);
 
             Employee<UUID> employeeToUpdate = employeeDatabase.getEmployee(ID);
             if (employeeToUpdate == null) throw new EmployeeNotFoundException("User not found");

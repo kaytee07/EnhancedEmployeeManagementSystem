@@ -109,12 +109,8 @@ public class EmployeeDatabase <T> {
 
 
     public ArrayList<Employee<T>> filterByDepartment(String department) throws Exception{
-        if (department != "HR"
-                || department != "Marketting"
-                || department != "Engineering"
-                || department != "Sales"){
-            throw new InvalidEmployeeIdException("Invalid Input as Department");
-        }
+
+
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
         ArrayList<Employee<T>> filteredEmployees;
         filteredEmployees = allEmployees.stream()
