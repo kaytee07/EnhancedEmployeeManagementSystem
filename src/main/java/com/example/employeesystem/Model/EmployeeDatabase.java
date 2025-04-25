@@ -1,6 +1,7 @@
 package com.example.employeesystem.Model;
 
 import com.example.employeesystem.Exception.EmployeeNotFoundException;
+import com.example.employeesystem.Exception.InvalidDepartmentException;
 import com.example.employeesystem.Exception.InvalidEmployeeIdException;
 import com.example.employeesystem.Exception.InvalidSalaryException;
 
@@ -10,6 +11,13 @@ import java.util.stream.Collectors;
 public class EmployeeDatabase <T> {
     
     private final HashMap<T, Employee<T>> employees = new HashMap<>();
+
+    public static void validateDepartment(String department) throws InvalidDepartmentException {
+        final List<String> VALID_DEPARTMENTS = List.of("HR", "Engineering", "Sales", "Marketing");
+        if (!VALID_DEPARTMENTS.contains(department)) {
+            throw new InvalidDepartmentException("Invalid department: " + department);
+        }
+    }
 
     public T addEmployee(Employee<T> employee){
         employees.put(employee.getEmployeeID(), employee);
@@ -106,12 +114,7 @@ public class EmployeeDatabase <T> {
 
 
     public ArrayList<Employee<T>> filterByDepartment(String department) throws Exception{
-        if (department != "HR"
-                || department != "Marketting"
-                || department != "Engineering"
-                || department != "Sales"){
-            throw new InvalidEmployeeIdException("Invalid Input as Department");
-        }
+        validateDepartment(department);
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
         ArrayList<Employee<T>> filteredEmployees;
         filteredEmployees = allEmployees.stream()

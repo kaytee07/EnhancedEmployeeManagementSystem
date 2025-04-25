@@ -1,5 +1,6 @@
 package com.example.employeesystem.Model;
 
+import com.example.employeesystem.Exception.InvalidDepartmentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,7 @@ class EmployeeDatabaseTest {
 
     @Test
     void removeEmployee() throws Exception {
-        Employee<UUID> emp1 = new Employee("Alice", "Engineering", 60000, 4, 101);
+        Employee<UUID> emp1 = new Employee<>("Alice", "Engineering", 60000, 4, 101);
         Employee<UUID> emp2 = new Employee<>("Bob", "Human Resource", 75000, 5, 102);
         database.addEmployee(emp1);
         database.addEmployee(emp2);
@@ -33,7 +34,14 @@ class EmployeeDatabaseTest {
     }
 
     @Test
-    void search() {
+    void filterByDepartment() throws Exception{
+        Employee<UUID> emp1 = new Employee("Alice", "Engineering", 60000, 4, 101);
+        Employee<UUID> emp2 = new Employee<>("Bob", "Human Resource", 75000, 5, 102);
+        database.addEmployee(emp1);
+        database.addEmployee(emp2);
+        Assertions.assertThrows(InvalidDepartmentException.class, () -> {
+            database.filterByDepartment("hover");
+        });
 
     }
 }
