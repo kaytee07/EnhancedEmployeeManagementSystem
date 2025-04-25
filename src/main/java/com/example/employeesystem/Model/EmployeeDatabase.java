@@ -1,18 +1,23 @@
 package com.example.employeesystem.Model;
 
 import com.example.employeesystem.Exception.EmployeeNotFoundException;
+import com.example.employeesystem.Exception.InvalidDepartmentException;
 import com.example.employeesystem.Exception.InvalidEmployeeIdException;
 import com.example.employeesystem.Exception.InvalidSalaryException;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
 
 public class EmployeeDatabase <T> {
-    private static final Logger LOGGER = Logger.getLogger(EmployeeDatabase.class.getName());
+    
     private final HashMap<T, Employee<T>> employees = new HashMap<>();
+
+    public static void validateDepartment(String department) throws InvalidDepartmentException {
+        final List<String> VALID_DEPARTMENTS = List.of("HR", "Engineering", "Sales", "Marketing");
+        if (!VALID_DEPARTMENTS.contains(department)) {
+            throw new InvalidDepartmentException("Invalid department: " + department);
+        }
+    }
 
     public T addEmployee(Employee<T> employee){
         employees.put(employee.getEmployeeID(), employee);
@@ -109,8 +114,7 @@ public class EmployeeDatabase <T> {
 
 
     public ArrayList<Employee<T>> filterByDepartment(String department) throws Exception{
-
-
+        validateDepartment(department);
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
         ArrayList<Employee<T>> filteredEmployees;
         filteredEmployees = allEmployees.stream()
@@ -159,13 +163,12 @@ public class EmployeeDatabase <T> {
         employees.values().forEach(employee -> {
             if (employee.getPerformanceRating() >= 4.5) {
                 try {
-                    double raiseToBeAdded = employee.getSalary() * percentageInDecimal;
-                    double newSalary = employee.getSalary() + raiseToBeAdded;
+                    double newSalary = employee.getSalary() + employee.getSalary() * percentageInDecimal;
                     employee.setSalary(newSalary);
                 } catch(InvalidSalaryException e){
-                    LOGGER.severe(e.getMessage());
-                } finally {
-                    LOGGER.info("salary should be greater than zero");
+                    System.out.println(e.getMessage());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
 
             }
